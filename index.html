@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Unshortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Unshortener</h1>
+        <input type="text" id="urlInput" placeholder="Enter shortened URL">
+        <button onclick="unshortenUrl()">Unshorten URL</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function unshortenUrl() {
+            const urlInput = document.getElementById('urlInput').value;
+            const apiUrl = "https://unshorten.me/api/v2/unshorten?url=" + encodeURIComponent(urlInput);
+            const headers = {
+                "Authorization": "Token b74063cbdba8f2e13d0a174d8fd52873791dbfef"
+            };
+
+            fetch(apiUrl, { headers: headers })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('result').innerText = 'Error: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
